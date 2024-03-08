@@ -3,7 +3,7 @@ import java.io.BufferedReader;
 import java.util.Scanner;
 
 
-public class XsDOT {
+public class XsDOT { //TODO handle exceptions
     static{
         try {
             System.loadLibrary("movelladot_pc_sdk_java64");
@@ -15,60 +15,84 @@ public class XsDOT {
     }
 
     private static XdpcHandler xdpcHandler = new XdpcHandler();
+    private static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
 
         boolean program = true;
         while(program) {
-            System.out.println("-----------------MENU-----------------");
-            System.out.println("   1: Connect DOT(s)");
-            System.out.println("   2: Perform MFM");
-            System.out.println("   3: Start recording");
-            System.out.println("   4: Synchronize DOTs (connection + example recording)");
-            System.out.println("   5: Export data");
-            System.out.println("   6: Get info about DOTs"); // make an option to rename it
-            System.out.println("   7: Exit");
 
-            Scanner sc = new Scanner(System.in);
-            Integer choice = Integer.parseInt(sc.nextLine());
+            printMenu();
+
+            Integer choice = Integer.parseInt(sc.nextLine()); //TODO error here!? look whats wrong and when it happens
 
             switch (choice) {
                 case 1: {
                     connectDOT();
+                    break;
                 }
                 case 2: {
+                    System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.");
+                    System.out.println("Then, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.");
+                    System.out.println("Continue doing so in all directions until it reaches 100%.");
                     mfm();
+                    break;
                 }
                 case 3: {
                     System.out.println("How many seconds do you want to record?:");
                     Integer seconds = Integer.parseInt((sc.nextLine()));
                     startRecording(seconds);
+                    break;
                 }
                 case 4: {
-                    //TODO
+                    //TODO sync DOTs
+                    break;
                 }
                 case 5: {
-                    //TODO
+                    //TODO export data
+                    break;
                 }
                 case 6: {
-                    //TODO
+                    //TODO DOT info
+                    infoDot();
+                    break;
                 }
                 case 7: {
+                    //TODO turn off
+                    turnOff();
+                    break;
+                }
+                case 8: {
                     System.out.println("Closing app...");
                     program = false;
+                    break;
                 }
 
 
             }
         }
+        turnOff();
         xdpcHandler.cleanup();
+        sc.close();
     }
 
 
+    public static void printMenu(){
+        System.out.println("-----------------MENU-----------------");
+        System.out.println("   1: Connect DOT(s)");
+        System.out.println("   2: Perform MFM");
+        System.out.println("   3: Start recording");
+        System.out.println("   4: Synchronize DOTs (connection + example recording)");
+        System.out.println("   5: Export data");
+        System.out.println("   6: Get info about DOTs"); // make an option to rename DOT
+        System.out.println("   7: Turn OFF DOTs");
+        System.out.println("   8: Exit");
+        System.out.println(" --- Choose an option: ");
+        //TODO see if the number is between the ones on the menu
+    }
 
     public static void connectDOT() throws Exception{
         if (!xdpcHandler.initialize())
             System.exit(-1);
-
         //scans for available DOTs
         xdpcHandler.scanForDots();
 
@@ -257,5 +281,59 @@ public class XsDOT {
                 System.out.print("Failed to disable logging.");
         }
 
+    }
+
+    public static void infoDot(){
+        if (xdpcHandler.connectedDots().isEmpty())
+        {
+            System.out.println("There're no DOTs connected. Aborting");
+            System.exit(-1);
+        }
+        boolean inputVal = true;
+        for (XsDotDevice device : xdpcHandler.connectedDots()){
+            System.out.println("Device info: ");
+            System.out.println("--Bluetooth address: " + device.bluetoothAddress());
+            System.out.println("--Device ID: " + device.deviceId());
+            System.out.println("--Device state: " + device.deviceState());
+            System.out.println("--Device ID: " + device.deviceTagName());
+            while(inputVal) {
+                System.out.println("--- Do you want to change tag name?: [y/n]");
+                String change = sc.nextLine();
+                if (change.equalsIgnoreCase("y")) {
+                    changeName(device);
+                    inputVal = false;
+                } else if (change.equalsIgnoreCase("n")) {
+                    inputVal = false;
+                } else {
+                    System.out.println("NOT A VALID INPUT: please try again");
+                }
+            }
+        }
+    }
+
+    public static void changeName(XsDotDevice device){
+        System.out.println("Has to be a non-empty string no longer than 16 characters");
+        System.out.println("Please, enter new tag name: ");
+        String name = sc.nextLine();
+        XsString tagName = new XsString(name);
+        if (!device.setDeviceTagName(tagName)){
+            System.out.println(" Couldn't change the DOT tag name");
+        } else {
+            System.out.println(" Successful tag name change");
+        }
+    }
+
+    public static void turnOff(){
+        if (xdpcHandler.connectedDots().isEmpty())
+        {
+            System.out.println("There're no DOTs connected. Aborting");
+            System.exit(-1);
+        }
+        for (XsDotDevice device : xdpcHandler.connectedDots()) {
+            if (!device.powerOff())
+                System.out.print("Failed to turn off");
+            System.out.println("Successful Turn off");
+
+        }
     }
 }
