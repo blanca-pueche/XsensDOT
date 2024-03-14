@@ -83,7 +83,7 @@ class XdpcHandler extends XsDotCallback
      * onAdvertisementFound callback to detect active Movella DOT devices
      * @throws Exception
      */
-    public void scanForDots() throws Exception
+    public void scanForDots(Scanner keyboard) throws Exception
     {
         // Start a scan and wait until we have found one or more Movella DOT Devices
         System.out.println("Scanning for devices...");
@@ -93,7 +93,7 @@ class XdpcHandler extends XsDotCallback
         boolean waitForConnections = true;
         long connectedDotCount = 0;
         long startTime = XsTimeStamp.nowMs();
-        Scanner keyboard = new Scanner(System.in);
+        //Scanner keyboard = new Scanner(System.in);
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while(waitForConnections && !errorReceived() && XsTimeStamp.nowMs() - startTime <= 20000)
         {
@@ -108,7 +108,7 @@ class XdpcHandler extends XsDotCallback
             if (br.ready())
                 waitForConnections = false;
         }
-        keyboard.close();
+        //keyboard.close();
 
         m_manager.disableDeviceDetection();
         System.out.println("Stopped scanning for Devices.");

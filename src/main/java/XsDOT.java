@@ -1,5 +1,6 @@
 import com.movella.movelladot_pc_sdk.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -17,62 +18,71 @@ public class XsDOT { //TODO handle exceptions
     private static XdpcHandler xdpcHandler = new XdpcHandler();
     private static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
+        try {
+            boolean program = true;
+            while (program) {
 
-        boolean program = true;
-        while(program) {
+                printMenu();
 
-            printMenu();
+                Integer choice = Integer.parseInt(sc.nextLine()); //TODO error here!? look whats wrong and when it happens
 
-            Integer choice = Integer.parseInt(sc.nextLine()); //TODO error here!? look whats wrong and when it happens
+                switch (choice) {
+                    case 1: {
+                        connectDOT();
+                        break;
+                    }
+                    case 2: {
+                        System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.");
+                        System.out.println("Then, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.");
+                        System.out.println("Continue doing so in all directions until it reaches 100%.");
+                        mfm();
+                        break;
+                    }
+                    case 3: {
+                        System.out.println("How many seconds do you want to record?:");
+                        Integer seconds = Integer.parseInt((sc.nextLine()));
+                        startRecording(seconds);
+                        break;
+                    }
+                    case 4: {
+                        //TODO sync DOTs
+                        break;
+                    }
+                    case 5: {
+                        //TODO export data
+                        break;
+                    }
+                    case 6: {
+                        //TODO DOT info
+                        infoDot();
+                        break;
+                    }
+                    case 7: {
+                        //TODO turn off
+                        turnOff();
+                        break;
+                    }
+                    case 8: {
+                        System.out.println("Closing app...");
+                        program = false;
+                        break;
+                    }
 
-            switch (choice) {
-                case 1: {
-                    connectDOT();
-                    break;
                 }
-                case 2: {
-                    System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.");
-                    System.out.println("Then, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.");
-                    System.out.println("Continue doing so in all directions until it reaches 100%.");
-                    mfm();
-                    break;
-                }
-                case 3: {
-                    System.out.println("How many seconds do you want to record?:");
-                    Integer seconds = Integer.parseInt((sc.nextLine()));
-                    startRecording(seconds);
-                    break;
-                }
-                case 4: {
-                    //TODO sync DOTs
-                    break;
-                }
-                case 5: {
-                    //TODO export data
-                    break;
-                }
-                case 6: {
-                    //TODO DOT info
-                    infoDot();
-                    break;
-                }
-                case 7: {
-                    //TODO turn off
-                    turnOff();
-                    break;
-                }
-                case 8: {
-                    System.out.println("Closing app...");
-                    program = false;
-                    break;
-                }
-
-
+                sc.nextLine();
+                System.out.println("HELLO");
             }
+        }catch(NumberFormatException ex){
+            System.out.println("  NOT A NUMBER. Closing application... \n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            turnOff();
+            if(xdpcHandler.manager()!=null) {
+                xdpcHandler.cleanup();
+            }
+            sc.close();
         }
-        turnOff();
-        xdpcHandler.cleanup();
-        sc.close();
     }
 
 
@@ -94,7 +104,7 @@ public class XsDOT { //TODO handle exceptions
         if (!xdpcHandler.initialize())
             System.exit(-1);
         //scans for available DOTs
-        xdpcHandler.scanForDots();
+        xdpcHandler.scanForDots(sc);
 
         if (xdpcHandler.detectedDots().empty())
         {
@@ -326,8 +336,8 @@ public class XsDOT { //TODO handle exceptions
     public static void turnOff(){
         if (xdpcHandler.connectedDots().isEmpty())
         {
-            System.out.println("There're no DOTs connected. Aborting");
-            System.exit(-1);
+           System.out.println("There're no DOTs connected. Aborting");
+           System.exit(-1);
         }
         for (XsDotDevice device : xdpcHandler.connectedDots()) {
             if (!device.powerOff())

@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="Updated menu and new functions">
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="Added functions. Changes in main. New recording displayed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DotExampleMagneticFieldMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DotExampleReceiveData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RecordData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XdpcHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XdpcHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/connectDOT.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,8 +72,8 @@
       <recent name="D:\Proyectos II\XsensDOT\src\main\java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
       <recent name="examples" />
+      <recent name="" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -97,7 +102,16 @@
       <workItem from="1709826109034" duration="612000" />
       <workItem from="1709831176780" duration="549000" />
       <workItem from="1709884964873" duration="403000" />
-      <workItem from="1709920500875" duration="4372000" />
+      <workItem from="1709920500875" duration="4881000" />
+      <workItem from="1709985380091" duration="4000" />
+      <workItem from="1710144173780" duration="369000" />
+      <workItem from="1710251370800" duration="38000" />
+      <workItem from="1710252889253" duration="22000" />
+      <workItem from="1710258046491" duration="133000" />
+      <workItem from="1710258844714" duration="13000" />
+      <workItem from="1710258917585" duration="69000" />
+      <workItem from="1710320402327" duration="1824000" />
+      <workItem from="1710443700675" duration="5782000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -106,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1709736241555</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added functions. Changes in main. New recording displayed">
+      <created>1709925196844</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709925196844</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +135,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated menu and new functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated menu and new functions" />
+    <MESSAGE value="Added functions. Changes in main. New recording displayed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added functions. Changes in main. New recording displayed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.NoSuchElementException" package="java.util" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
