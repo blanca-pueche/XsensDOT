@@ -14,7 +14,6 @@ public class XsDOT { //TODO handle exceptions
             System.exit(1);
         }
     }
-
     private static XdpcHandler xdpcHandler = new XdpcHandler();
     private static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
@@ -25,6 +24,10 @@ public class XsDOT { //TODO handle exceptions
                 printMenu();
 
                 Integer choice = Integer.parseInt(sc.nextLine()); //TODO error here!? look whats wrong and when it happens
+                while (choice>8 || choice<0){
+                    System.out.println("Not a valid number. Enter a number between 1 and 8");
+                    choice = Integer.parseInt(sc.nextLine());
+                }
 
                 switch (choice) {
                     case 1: {
@@ -32,9 +35,7 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 2: {
-                        System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.");
-                        System.out.println("Then, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.");
-                        System.out.println("Continue doing so in all directions until it reaches 100%.");
+                        System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.\nThen, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.\nContinue doing so in all directions until it reaches 100%.");
                         mfm();
                         break;
                     }
@@ -65,19 +66,18 @@ public class XsDOT { //TODO handle exceptions
                     case 8: {
                         System.out.println("Closing app...");
                         program = false;
+                        turnOff();
                         break;
                     }
 
                 }
                 sc.nextLine();
-                System.out.println("HELLO");
             }
         }catch(NumberFormatException ex){
             System.out.println("  NOT A NUMBER. Closing application... \n");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            turnOff();
             if(xdpcHandler.manager()!=null) {
                 xdpcHandler.cleanup();
             }
@@ -93,7 +93,7 @@ public class XsDOT { //TODO handle exceptions
         System.out.println("   3: Start recording");
         System.out.println("   4: Synchronize DOTs (connection + example recording)");
         System.out.println("   5: Export data");
-        System.out.println("   6: Get info about DOTs"); // make an option to rename DOT
+        System.out.println("   6: Get info about DOTs"); // TODO make an option to rename DOT
         System.out.println("   7: Turn OFF DOTs");
         System.out.println("   8: Exit");
         System.out.println(" --- Choose an option: ");
@@ -210,8 +210,10 @@ public class XsDOT { //TODO handle exceptions
             else
                 System.out.println("Failed to set filter profile!");
 
-            System.out.println("Setting quaternion CSV output");
-            device.setLogOptions(XsLogOptions.Quaternion);
+            //System.out.println("Setting quaternion CSV output");
+            //device.setLogOptions(XsLogOptions.Quaternion);
+            System.out.println("Setting quaternion and euler CSV output");
+            device.setLogOptions(XsLogOptions.QuaternionAndEuler);
 
             final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
             System.out.println(String.format("Enable logging to: %s", logFileName));
@@ -229,7 +231,7 @@ public class XsDOT { //TODO handle exceptions
 
         System.out.println("Starting measurement...");
 
-        System.out.println("Main loop. Measuring data for" + seconds + " seconds.");
+        System.out.println("Main loop. Measuring data for " + seconds + " seconds.");
         System.out.println("-----------------------------------------");
 
         for (XsDotDevice device : xdpcHandler.connectedDots())
