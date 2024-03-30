@@ -23,7 +23,7 @@ public class XsDOT { //TODO handle exceptions
 
                 printMenu();
 
-                Integer choice = Integer.parseInt(sc.nextLine()); //TODO error here!? look whats wrong and when it happens
+                Integer choice = Integer.parseInt(sc.nextLine());
                 while (choice>8 || choice<0){
                     System.out.println("Not a valid number. Enter a number between 1 and 8");
                     choice = Integer.parseInt(sc.nextLine());
@@ -36,6 +36,8 @@ public class XsDOT { //TODO handle exceptions
                     }
                     case 2: {
                         System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.\nThen, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.\nContinue doing so in all directions until it reaches 100%.");
+                        System.out.println("Press Enter to continue...");
+                        sc.nextLine();
                         mfm();
                         break;
                     }
@@ -54,12 +56,10 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 6: {
-                        //TODO DOT info
                         infoDot();
                         break;
                     }
                     case 7: {
-                        //TODO turn off
                         turnOff();
                         break;
                     }
@@ -69,7 +69,6 @@ public class XsDOT { //TODO handle exceptions
                         turnOff();
                         break;
                     }
-
                 }
                 sc.nextLine();
             }
@@ -93,11 +92,10 @@ public class XsDOT { //TODO handle exceptions
         System.out.println("   3: Start recording");
         System.out.println("   4: Synchronize DOTs (connection + example recording)");
         System.out.println("   5: Export data");
-        System.out.println("   6: Get info about DOTs"); // TODO make an option to rename DOT
+        System.out.println("   6: Get info about DOTs");
         System.out.println("   7: Turn OFF DOTs");
         System.out.println("   8: Exit");
         System.out.println(" --- Choose an option: ");
-        //TODO see if the number is between the ones on the menu
     }
 
     public static void connectDOT() throws Exception{
@@ -120,14 +118,6 @@ public class XsDOT { //TODO handle exceptions
             System.out.println("Could not connect to any Movella DOT device(s). Aborting.");
             System.exit(-1);
         }
-
-        // turn off DOTs
-        /*for (XsDotDevice device : xdpcHandler.connectedDots()) {
-            if (!device.powerOff())
-                System.out.print("Failed to turn off");
-            System.out.println("Successful Turn off");
-
-        }*/
     }
 
     public static void mfm() throws Exception{
@@ -212,6 +202,7 @@ public class XsDOT { //TODO handle exceptions
 
             //System.out.println("Setting quaternion CSV output");
             //device.setLogOptions(XsLogOptions.Quaternion);
+            //TODO calibration thingy
             System.out.println("Setting quaternion and euler CSV output");
             device.setLogOptions(XsLogOptions.QuaternionAndEuler);
 
