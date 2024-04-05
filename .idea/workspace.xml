@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="main almost finished">
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="changes in main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XdpcHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XdpcHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +48,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/DSS/DSS_Cardiac",
+    "last_opened_file_path": "D:/Proyectos II/XsensDOT",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -115,6 +116,9 @@
       <workItem from="1711128835310" duration="39000" />
       <workItem from="1711644575992" duration="2607000" />
       <workItem from="1711731503219" duration="14000" />
+      <workItem from="1711818452191" duration="1264000" />
+      <workItem from="1711881822456" duration="26000" />
+      <workItem from="1712331247563" duration="4565000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -144,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1711012824642</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="changes in main">
+      <created>1711818486512</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1711818486512</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,7 +166,8 @@
     <MESSAGE value="Added functions. Changes in main. New recording displayed" />
     <MESSAGE value="Scanner problem solved (only option 1 in menu)" />
     <MESSAGE value="main almost finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="main almost finished" />
+    <MESSAGE value="changes in main" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes in main" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

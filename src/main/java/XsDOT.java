@@ -20,13 +20,15 @@ public class XsDOT { //TODO handle exceptions
         try {
             boolean program = true;
             while (program) {
-
                 printMenu();
-
-                Integer choice = Integer.parseInt(sc.nextLine());
+                //Integer choice = Integer.parseInt(sc.nextLine());
+                Integer choice = sc.nextInt(); // Read the integer input
+                sc.nextLine();
                 while (choice>8 || choice<0){
                     System.out.println("Not a valid number. Enter a number between 1 and 8");
-                    choice = Integer.parseInt(sc.nextLine());
+                    //choice = Integer.parseInt(sc.nextLine());
+                    choice = sc.nextInt(); // Read the integer input again
+                    sc.nextLine();
                 }
 
                 switch (choice) {
@@ -60,26 +62,32 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 7: {
-                        turnOff();
+                        turnOff(); //TODO do i need this!?
                         break;
                     }
                     case 8: {
-                        System.out.println("Closing app...");
+                        System.out.println("Closing app..."); //TODO check if there's any connected DOTs
                         program = false;
                         turnOff();
+                        if(xdpcHandler.manager()!=null) {
+                            xdpcHandler.cleanup();
+                        }
                         break;
                     }
                 }
-                sc.nextLine();
+                System.out.println("When you are ready to continue click [ENTER]");
+                if (sc.hasNextLine()) {
+                    sc.nextLine(); // Consume newline
+                }
             }
         }catch(NumberFormatException ex){
             System.out.println("  NOT A NUMBER. Closing application... \n");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(xdpcHandler.manager()!=null) {
+           /* if(xdpcHandler.manager()!=null) {
                 xdpcHandler.cleanup();
-            }
+            }*/
             sc.close();
         }
     }
@@ -102,7 +110,7 @@ public class XsDOT { //TODO handle exceptions
         if (!xdpcHandler.initialize())
             System.exit(-1);
         //scans for available DOTs
-        xdpcHandler.scanForDots(sc);
+        xdpcHandler.scanForDots();
 
         if (xdpcHandler.detectedDots().empty())
         {
@@ -121,11 +129,7 @@ public class XsDOT { //TODO handle exceptions
     }
 
     public static void mfm() throws Exception{
-        if (xdpcHandler.connectedDots().isEmpty())
-        {
-            System.out.println("There're no DOTs connected. Aborting");
-            System.exit(-1);
-        }
+        checkConnection();
 
         for (XsDotDevice device : xdpcHandler.connectedDots())
         {
@@ -171,20 +175,16 @@ public class XsDOT { //TODO handle exceptions
             }
         }
     }
-    public static void startRecording(int seconds) throws Exception{
-        if (xdpcHandler.detectedDots().empty())
-        {
-            System.out.println("No Movella DOT device(s) found. Aborting.");
-            System.exit(-1);
-        }
 
-        xdpcHandler.connectDots();
-
+    public static void checkConnection() {
         if (xdpcHandler.connectedDots().isEmpty())
         {
-            System.out.println("Could not connect to any Movella DOT device(s). Aborting.");
+            System.out.println("There're no DOTs connected. Aborting");
             System.exit(-1);
         }
+    }
+    public static void startRecording(int seconds) throws Exception{
+        checkConnection();
 
         for (XsDotDevice device : xdpcHandler.connectedDots())
         {
@@ -205,9 +205,13 @@ public class XsDOT { //TODO handle exceptions
             //TODO calibration thingy
             System.out.println("Setting quaternion and euler CSV output");
             device.setLogOptions(XsLogOptions.QuaternionAndEuler);
+            //System.out.println("Setting euler CSV output");
+            //device.setLogOptions(XsLogOptions.Euler);
 
             final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
-            System.out.println(String.format("Enable logging to: %s", logFileName));
+            System.out.println(String.format("Enable logging to: %s", logFileName)); //TODO which one do i keep!?
+            //final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.deviceTagName()));
+            //System.out.println(String.format("Enable logging to: %s", logFileName));
 
             if (!device.enableLogging(logFileName))
                 System.out.println(String.format("Failed to enable logging. Reason: %s", device.lastResultText().toString()));
@@ -327,11 +331,7 @@ public class XsDOT { //TODO handle exceptions
     }
 
     public static void turnOff(){
-        if (xdpcHandler.connectedDots().isEmpty())
-        {
-           System.out.println("There're no DOTs connected. Aborting");
-           System.exit(-1);
-        }
+        checkConnection();
         for (XsDotDevice device : xdpcHandler.connectedDots()) {
             if (!device.powerOff())
                 System.out.print("Failed to turn off");
