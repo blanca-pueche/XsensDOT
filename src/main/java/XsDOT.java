@@ -296,8 +296,8 @@ public class XsDOT { //TODO handle exceptions
             System.out.println("There're no DOTs connected. Aborting");
             System.exit(-1);
         }
-        boolean inputVal = true;
         for (XsDotDevice device : xdpcHandler.connectedDots()){
+            boolean inputVal = true;
             System.out.println("Device info: ");
             System.out.println("--Bluetooth address: " + device.bluetoothAddress());
             System.out.println("--Device ID: " + device.deviceId());

@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="fixed errors + correct output file">
-      <change afterPath="$PROJECT_DIR$/src/main/java/CalibrationExample.java" afterDir="false" />
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="calibration class demo">
+      <change afterPath="$PROJECT_DIR$/src/main/java/NEWCalibExample.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Sync.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CalibrationExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/CalibrationExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,11 +71,11 @@
       <recent name="D:\Proyectos II\XsensDOT\src\main\java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="examples" />
       <recent name="" />
+      <recent name="examples" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.NEWCalibExample">
     <configuration name="CalibrationExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="CalibrationExample" />
       <module name="XsensDOT" />
@@ -79,9 +83,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NEWCalibExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="NEWCalibExample" />
+      <module name="XsensDOT" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Sync" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Sync" />
+      <module name="XsensDOT" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XsDOT" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XsDOT" />
+      <module name="XsensDOT" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.NEWCalibExample" />
+        <item itemvalue="Application.XsDOT" />
         <item itemvalue="Application.CalibrationExample" />
+        <item itemvalue="Application.Sync" />
       </list>
     </recent_temporary>
   </component>
@@ -136,6 +164,8 @@
       <workItem from="1712575051956" duration="3039000" />
       <workItem from="1712654894427" duration="6438000" />
       <workItem from="1712746577886" duration="3374000" />
+      <workItem from="1712754326247" duration="39000" />
+      <workItem from="1712940895599" duration="5307000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -179,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1712335877052</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="calibration class demo">
+      <created>1712754350833</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712754350833</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,7 +229,8 @@
     <MESSAGE value="main almost finished" />
     <MESSAGE value="changes in main" />
     <MESSAGE value="fixed errors + correct output file" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed errors + correct output file" />
+    <MESSAGE value="calibration class demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="calibration class demo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
