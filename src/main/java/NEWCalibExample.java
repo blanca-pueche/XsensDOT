@@ -1,5 +1,8 @@
 import com.movella.movelladot_pc_sdk.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NEWCalibExample {
 
     static{
@@ -64,14 +67,21 @@ public class NEWCalibExample {
 
         boolean orientationResetDone = false;
         long startTime = XsTimeStamp.nowMs();
-        while (XsTimeStamp.nowMs() - startTime <= 1000*0.5) //in miliseconds (0.5 seconds)
+        XsQuaternion q1 = new XsQuaternion();
+        XsQuaternion q3 = new XsQuaternion();
+        /*List<Double> w = new ArrayList<>();
+        List<Double> x = new ArrayList<>();
+        List<Double> y = new ArrayList<>();
+        List<Double> z = new ArrayList<>();
+        Double wMean;
+        Double xMean;
+        Double yMean;
+        Double zMean;*/
+        while (XsTimeStamp.nowMs() - startTime <= 1000*8) //in miliseconds (8 seconds)
         {
             if (xdpcHandler.packetsAvailable())
             {
                 System.out.print("\r");
-                XsQuaternion q1 = new XsQuaternion();
-                XsQuaternion q2 = new XsQuaternion();
-                XsQuaternion q3 = new XsQuaternion();
                 for (XsDotDevice device : xdpcHandler.connectedDots())
                 {
                     // Retrieve a packet
@@ -80,26 +90,25 @@ public class NEWCalibExample {
                     XsQuaternion quat;
                     if (packet.containsOrientation())
                     {
-                        euler = packet.orientationEuler();
-                        System.out.print(String.format("Roll:%7.2f, Pitch:%7.2f, Yaw:%7.2f| ", euler.roll(), euler.pitch(), euler.yaw()));
                         quat = packet.orientationQuaternion();
-                        //TODO check this
-                        if (q1.empty()){
-                            q1 = quat;
-                        } else {
-                            q2 = quat;
-                        }
-                        System.out.println("W: "+quat.w()+" X: "+quat.x()+" Y: "+quat.y()+" Z: "+quat.z());
-                        //XsEuler e1 = new XsEuler(quat);
-                        //System.out.print(String.format("Roll_1:%7.2f, Pitch_1:%7.2f, Yaw_1:%7.2f| ", e1.roll(), e1.pitch(), e1.yaw()));
+                        q1 = quat;
                     }
                     packet.delete();
-                }
-                q3.multiply(q1, q2.conjugate());
-                System.out.println("--------------------------------------q3--------------------------------------------");
-                System.out.println("W: "+q3.w()+" X: "+q3.x()+" Y: "+q3.y()+" Z: "+q3.z());
+                    q3.multiply(q1, q1.conjugate());
+                    //System.out.println("W: "+q3.x()+" X: "+q3.x()+" Y: "+q3.y()+" Z: "+q3.z());
+                    /*w.add(q3.w());
+                    x.add(q3.x());
+                    y.add(q3.y());
+                    z.add(q3.z());*/
+                    //TODO me voy a quedar con el ultimo e3, para facilitar el proceso
+                    XsEuler e3 = new XsEuler(q3);
+                    System.out.print(String.format("%-42s", device.bluetoothAddress()));
+                    System.out.println("--------------------------------------e3--------------------------------------------");
+                    System.out.println("Roll: "+e3.roll()+" Pitch: "+e3.pitch()+" Yaw: "+e3.yaw());
 
-                if (!orientationResetDone && (XsTimeStamp.nowMs() - startTime) > 5000)
+                }
+
+                if (!orientationResetDone /*&& (XsTimeStamp.nowMs() - startTime) > 5000*/)
                 {
                     for (XsDotDevice device : xdpcHandler.connectedDots())
                     {
@@ -113,7 +122,18 @@ public class NEWCalibExample {
                     orientationResetDone = true;
                 }
             }
+            /*wMean = calculateAverage(w);
+            xMean = calculateAverage(x);
+            yMean = calculateAverage(y);
+            zMean = calculateAverage(z);
+            XsQuaternion finalQuat = new XsQuaternion(wMean,xMean,yMean,zMean);
+            XsEuler e3 = new XsEuler(finalQuat);
+
+            //System.out.print(String.format("%-42s", device.bluetoothAddress()));
+            System.out.println("--------------------------------------e3--------------------------------------------");
+            System.out.println("Roll: "+e3.roll()+" Pitch: "+e3.pitch()+" Yaw: "+e3.yaw());*/
         }
+
         System.out.println("\n-----------------------------------------");
 
         for (XsDotDevice device : xdpcHandler.connectedDots())
@@ -127,6 +147,14 @@ public class NEWCalibExample {
         System.out.println("\n");
         xdpcHandler.cleanup();
     }
+
+    /*public static Double calculateAverage(List <Double> array) {
+        int sum = 0;
+        for (int i=0; i< array.size(); i++) {
+            sum += i;
+        }
+        return (double) (sum / array.size());
+    }*/
 }
 
 
