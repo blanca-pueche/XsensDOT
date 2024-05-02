@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment=" NEW calibration class demo">
-      <change afterPath="$PROJECT_DIR$/src/main/java/FirmwareUpdate.java" afterDir="false" />
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="changes in main, made a calibration function with the complex method and a simple one with resetHeading">
+      <change afterPath="$PROJECT_DIR$/src/main/java/EulerAndFreeAccPlot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/NEWCalibExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/NEWCalibExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Sync.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Sync.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,23 +45,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/DSS/DSS_Cardiac&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/blanc/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Proyectos II\XsensDOT\src" />
@@ -76,8 +77,8 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.XsDOT">
-    <configuration name="CalibrationExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="CalibrationExample" />
+    <configuration name="EulerAndFreeAccPlot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="EulerAndFreeAccPlot" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -114,10 +115,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.XsDOT" />
+        <item itemvalue="Application.EulerAndFreeAccPlot" />
+        <item itemvalue="Application.Sync" />
         <item itemvalue="Application.NEWCalibExample" />
         <item itemvalue="Application.FirmwareUpdate" />
-        <item itemvalue="Application.CalibrationExample" />
-        <item itemvalue="Application.Sync" />
       </list>
     </recent_temporary>
   </component>
@@ -178,7 +179,15 @@
       <workItem from="1713031449804" duration="223000" />
       <workItem from="1713177121284" duration="1893000" />
       <workItem from="1714234948703" duration="8106000" />
-      <workItem from="1714315012516" duration="9033000" />
+      <workItem from="1714315012516" duration="9085000" />
+      <workItem from="1714464639772" duration="323000" />
+      <workItem from="1714470097863" duration="1624000" />
+      <workItem from="1714558379793" duration="235000" />
+      <workItem from="1714558639852" duration="35000" />
+      <workItem from="1714558828056" duration="1309000" />
+      <workItem from="1714575896436" duration="6011000" />
+      <workItem from="1714584608255" duration="508000" />
+      <workItem from="1714662090774" duration="7090000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -236,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1712946784358</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="changes in main, made a calibration function with the complex method and a simple one with resetHeading">
+      <created>1714330171644</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1714330171644</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,7 +267,8 @@
     <MESSAGE value="fixed errors + correct output file" />
     <MESSAGE value="calibration class demo" />
     <MESSAGE value=" NEW calibration class demo" />
-    <option name="LAST_COMMIT_MESSAGE" value=" NEW calibration class demo" />
+    <MESSAGE value="changes in main, made a calibration function with the complex method and a simple one with resetHeading" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes in main, made a calibration function with the complex method and a simple one with resetHeading" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

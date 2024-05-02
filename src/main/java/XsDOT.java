@@ -1,6 +1,17 @@
 import com.movella.movelladot_pc_sdk.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
+import javax.swing.*;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -37,6 +48,9 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 2: {
+                        System.out.println("If you want to perform the MFM on more than one sensor, please keep in mind that it will happen AT THE SAME TIME FOR ALL THE SENSORS");
+                        System.out.println("Ask for help if needed, if not, do one sensor at a time.");
+                        System.out.println("---------");
                         System.out.println("To perform an MFM, the sensor has to be parallel to the ground (orange side upwards), rotated 360º forward and after that, 360º sideways.\nThen, we need to turn it 90º clockwise (still parallel to the floor) and repeat the process.\nContinue doing so in all directions until it reaches 100%.");
                         System.out.println("Press Enter to continue...");
                         sc.nextLine();
@@ -51,7 +65,7 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 4: {
-                        //TODO sync DOTs
+                        sync();
                         break;
                     }
                     case 5: {
@@ -63,11 +77,12 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 7: {
-                        turnOff(); //TODO do i need this!?
+                        //TODO chart
+                        graphs();
                         break;
                     }
                     case 8: {
-                        System.out.println("Closing app..."); //TODO check if there's any connected DOTs
+                        System.out.println("Closing app...");
                         program = false;
                         turnOff();
                         if(xdpcHandler.manager()!=null) {
@@ -101,8 +116,8 @@ public class XsDOT { //TODO handle exceptions
         System.out.println("   3: Start recording");
         System.out.println("   4: Synchronize DOTs (connection + example recording)");
         System.out.println("   5: Export data");
-        System.out.println("   6: Get info about DOTs");
-        System.out.println("   7: Turn OFF DOTs");
+        System.out.println("   6: Get info about DOT(s)");
+        System.out.println("   7: View last logs from DOT(s)");
         System.out.println("   8: Exit");
         System.out.println(" --- Choose an option: ");
     }
@@ -129,6 +144,109 @@ public class XsDOT { //TODO handle exceptions
         }
     }
 
+    public static void graphs() throws Exception {
+        checkConnection();
+
+        for (XsDotDevice device : xdpcHandler.connectedDots())
+        {
+            String logFileName = String.valueOf(new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-'))));
+            String fileName = new File(logFileName).getName();
+            String plotTitle = fileName.substring(0, fileName.lastIndexOf('.'));
+
+            // Read data from the file
+            List<Double> sampleTime = new ArrayList<>();
+            List<Double> eulerX = new ArrayList<>();
+            List<Double> eulerY = new ArrayList<>();
+            List<Double> eulerZ = new ArrayList<>();
+            List<Double> freeAccX = new ArrayList<>();
+            List<Double> freeAccY = new ArrayList<>();
+            List<Double> freeAccZ = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new FileReader(logFileName))) {
+                String line;
+                // Skip the first line (header)
+                br.readLine();
+                boolean headerSkipped = false;
+                boolean header2Skipped = false;
+                while ((line = br.readLine()) != null) {
+                    if (!headerSkipped) {
+                        headerSkipped = true;
+                        continue;
+                    }
+                    if (!header2Skipped) {
+                        header2Skipped = true;
+                        continue;
+                    }
+                    String[] parts = line.split(",");
+                    // Excludes the times where there is no data
+                    if (parts.length < 7) {
+                        continue;
+                    }
+                    sampleTime.add(Double.parseDouble(parts[0]));
+                    eulerX.add(Double.parseDouble(parts[1]));
+                    eulerY.add(Double.parseDouble(parts[2]));
+                    eulerZ.add(Double.parseDouble(parts[3]));
+                    freeAccX.add(Double.parseDouble(parts[4]));
+                    freeAccY.add(Double.parseDouble(parts[5]));
+                    freeAccZ.add(Double.parseDouble(parts[6]));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            XYSeriesCollection eulerDataset = new XYSeriesCollection();
+            eulerDataset.addSeries(createSeries(sampleTime, eulerX, "Euler X"));
+            eulerDataset.addSeries(createSeries(sampleTime, eulerY, "Euler Y"));
+            eulerDataset.addSeries(createSeries(sampleTime, eulerZ, "Euler Z"));
+
+            XYSeriesCollection freeAccDataset = new XYSeriesCollection();
+            freeAccDataset.addSeries(createSeries(sampleTime, freeAccX, "Free Acc X"));
+            freeAccDataset.addSeries(createSeries(sampleTime, freeAccY, "Free Acc Y"));
+            freeAccDataset.addSeries(createSeries(sampleTime, freeAccZ, "Free Acc Z"));
+
+            //Euler angles chart
+            JFreeChart eulerChart = ChartFactory.createXYLineChart(
+                    "Euler Angles - " + plotTitle,
+                    "Sample Time",
+                    "Value",
+                    eulerDataset
+            );
+
+            //Free acceleration chart
+            JFreeChart freeAccChart = ChartFactory.createXYLineChart(
+                    "Free Acceleration - " + plotTitle,
+                    "Sample Time",
+                    "Value",
+                    freeAccDataset
+            );
+
+
+            ChartPanel eulerPanel = new ChartPanel(eulerChart);
+
+            JFrame eulerFrame = new JFrame("Euler Angles Plot");
+            eulerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            eulerFrame.getContentPane().add(eulerPanel);
+            eulerFrame.pack();
+            eulerFrame.setVisible(true);
+
+            ChartPanel freeAccPanel = new ChartPanel(freeAccChart);
+
+            JFrame freeAccFrame = new JFrame("Free Acceleration Plot");
+            freeAccFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            freeAccFrame.getContentPane().add(freeAccPanel);
+            freeAccFrame.pack();
+            freeAccFrame.setVisible(true);
+        }
+    }
+
+    public static XYSeries createSeries(List<Double> xData, List<Double> yData, String seriesName) {
+        XYSeries series = new XYSeries(seriesName);
+        for (int i = 0; i < xData.size(); i++) {
+            series.add(xData.get(i), yData.get(i));
+        }
+        return series;
+    }
+
     public static void mfm() throws Exception{
         checkConnection();
 
@@ -140,7 +258,6 @@ public class XsDOT { //TODO handle exceptions
                 System.out.println(String.format("Could not start magnetic field mapping. Reason: %s", device.lastResultText().toString()));
                 continue;
             }
-
             // Add device to buffer to track MFM progress per device
             xdpcHandler.addDeviceToProgressBuffer(device.bluetoothAddress().toString());
         }
@@ -310,6 +427,96 @@ public class XsDOT { //TODO handle exceptions
 
     }*/
 
+    public static void sync()throws Exception {
+        checkConnection();
+
+        for (XsDotDevice device : xdpcHandler.connectedDots())
+        {
+            // Make sure all connected devices have the same filter profile and outputrate
+            if (device.setOnboardFilterProfile(new XsString("General")))
+                System.out.println("Successfully set filter profile to General");
+            else
+                System.out.println("Failed to set filter profile!");
+
+            if (device.setOutputRate(60))
+                System.out.println("Successfully set output rate to 60 Hz");
+            else
+                System.out.println("Failed to set output rate!");
+        }
+
+        XsDotConnectionManager manager = xdpcHandler.manager();
+        ArrayList<XsDotDevice> deviceList = xdpcHandler.connectedDots();
+        System.out.println(String.format("\nStarting sync for connected devices... Root node: %s", deviceList.get(deviceList.size() - 1).bluetoothAddress()));
+        System.out.println("This takes at least 14 seconds");
+        if (!manager.startSync(deviceList.get(deviceList.size() - 1).bluetoothAddress()))
+        {
+            System.out.println(String.format("Could not start sync. Reason: %s", manager.lastResultText().toString()));
+            if (manager.lastResult() != XsResultValue.XRV_SYNC_COULD_NOT_START)
+            {
+                System.out.println("Sync could not be started. Aborting.");
+                xdpcHandler.cleanup();
+                System.exit(-1);
+            }
+
+            // If (some) devices are already in sync mode. Disable sync on all devices first.
+            manager.stopSync();
+            System.out.println("Retrying start sync after stopping sync");
+            if (!manager.startSync(deviceList.get(deviceList.size() - 1).bluetoothAddress()))
+            {
+                System.out.println(String.format("Could not start sync. Reason: %s. Aborting.", manager.lastResultText().toString()));
+                xdpcHandler.cleanup();
+                System.exit(-1);
+            }
+        }
+
+        // Start live data output. Make sure root node is last to go to measurement.
+        System.out.println("Putting devices into measurement mode: ");
+        for (XsDotDevice device : deviceList)
+            if (!device.startMeasurement(XsPayloadMode.ExtendedEuler))
+            {
+                System.out.println(String.format("Could not put device into measurement mode. Reason: %s", device.lastResultText().toString()));
+                continue;
+            }
+
+        System.out.println("Starting measurement...");
+
+        System.out.println("Main loop. Measuring data for 2 seconds.");
+        System.out.println("-----------------------------------------");
+
+        for (XsDotDevice device : deviceList)
+            System.out.print(String.format("%-27s", device.bluetoothAddress()));
+        System.out.print("\n");
+
+        long startTime = XsTimeStamp.nowMs();
+        while (XsTimeStamp.nowMs() - startTime <= 2000)
+        {
+            if (xdpcHandler.packetsAvailable())
+            {
+                for (XsDotDevice device : deviceList)
+                {
+                    // Retrieve a packet
+                    XsDataPacket packet = xdpcHandler.getNextPacket(device.bluetoothAddress().toString());
+
+                    if (packet.containsOrientation())
+                    {
+                        XsEuler euler = packet.orientationEuler();
+                        System.out.print(String.format("TS:%8d, Roll:%7.2f| ", packet.sampleTimeFine(), euler.roll()));
+                    }
+
+                    packet.delete();
+                }
+                System.out.print("\n");
+            }
+        }
+        System.out.println("\n-----------------------------------------");
+
+        System.out.println("Stopping measurement...");
+        for (XsDotDevice device : deviceList) {
+            if (!device.stopMeasurement())
+                System.out.print("Failed to stop measurement.");
+        }
+    }
+
     public static void startRecording(int seconds) throws Exception {
         checkConnection();
 
@@ -321,8 +528,14 @@ public class XsDOT { //TODO handle exceptions
             } else {
                 System.out.println("Failed to set filter profile!");
             }
+            if (device.setOutputRate(60)) {
+                System.out.println("Successfully set output rate to 60");
+            } else {
+                System.out.println("Failed to set output rate!");
+            }
 
-            // Enable logging of Euler angles to CSV file
+            // Enable logging of Quaternion and Euler angles to CSV file
+            //TODO why doesnt it write the right angles
             device.setLogOptions(XsLogOptions.Euler);
             final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
             System.out.println(String.format("Enable logging to: %s", logFileName));
@@ -343,7 +556,7 @@ public class XsDOT { //TODO handle exceptions
         while (XsTimeStamp.nowMs() - startTime <= 5000) { // Reset within the first 5 seconds
             for (XsDotDevice device : xdpcHandler.connectedDots()) {
                 System.out.print(String.format("\nResetting heading for device %s: ", device.bluetoothAddress().toString()));
-                if (device.resetOrientation(XsResetMethod.XRM_Heading)) {//TODO changes Heading for Alignment
+                if (device.resetOrientation(XsResetMethod.XRM_Heading)) {
                     System.out.print("OK");
                 } else {
                     System.out.print(String.format("NOK: %s", device.lastResultText().toString()));
@@ -428,7 +641,6 @@ public class XsDOT { //TODO handle exceptions
 
         // Reset heading for each device to calibrate sensors
         long startTime = XsTimeStamp.nowMs();
-        //TODO call calibration function
         boolean orientationResetDone = false;
         XsQuaternion q1 = new XsQuaternion();
         XsQuaternion q3 = new XsQuaternion();
@@ -445,6 +657,8 @@ public class XsDOT { //TODO handle exceptions
         {
             if (xdpcHandler.packetsAvailable()) {
                 System.out.print("\r");
+
+
                 for (XsDotDevice device : xdpcHandler.connectedDots()) {
                     // Retrieve a packet
                     XsDataPacket packet = xdpcHandler.getNextPacket(device.bluetoothAddress().toString());
@@ -469,6 +683,7 @@ public class XsDOT { //TODO handle exceptions
                 System.out.println("Roll: " + e3.roll() + " Pitch: " + e3.pitch() + " Yaw: " + e3.yaw());
                 System.out.println("-----------------------------------------");
                 System.out.println("-----------------------------------------");
+
 
                 // Start measurement loop
                 System.out.println("\nStarting measurement...");
@@ -530,11 +745,13 @@ public class XsDOT { //TODO handle exceptions
             boolean inputVal = true;
             System.out.println("Device info: ");
             device.identify();
-            System.out.println("--Battery level: " + device.batteryLevel());
-            System.out.println("--Bluetooth address: " + device.bluetoothAddress());
+            System.out.println("--Device tag name: " + device.deviceTagName());
             System.out.println("--Device ID: " + device.deviceId());
+            System.out.println("--Bluetooth address: " + device.bluetoothAddress());
+            System.out.println("--Battery level: " + device.batteryLevel());
+            System.out.println("--Firmware version: " + device.firmwareVersion());
+            System.out.println("--Hardware version: " + device.hardwareVersion());
             System.out.println("--Device state: " + device.deviceState());
-            System.out.println("--Device ID: " + device.deviceTagName());
             while(inputVal) {
                 System.out.println("--- Do you want to change tag name?: [y/n]");
                 String change = sc.nextLine();

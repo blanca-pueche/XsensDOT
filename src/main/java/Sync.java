@@ -45,8 +45,8 @@ public class Sync {
             else
                 System.out.println("Failed to set filter profile!");
 
-            if (device.setOutputRate(20))
-                System.out.println("Successfully set output rate to 20 Hz");
+            if (device.setOutputRate(60))
+                System.out.println("Successfully set output rate to 60 Hz");
             else
                 System.out.println("Failed to set output rate!");
         }
