@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="changes in main, made a calibration function with the complex method and a simple one with resetHeading">
-      <change afterPath="$PROJECT_DIR$/src/main/java/EulerAndFreeAccPlot.java" afterDir="false" />
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="new methods: graphs and sync, fixed mfm">
+      <change afterPath="$PROJECT_DIR$/src/main/java/HelloWorldFX.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Sync.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Sync.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FirmwareUpdate.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,12 +52,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/blanc/Downloads/jfreechart-1.0.19/jfreechart-1.0.19/lib",
+    "last_opened_file_path": "C:/Users/blanc/Downloads/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel",
@@ -76,30 +77,16 @@
       <recent name="examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.XsDOT">
-    <configuration name="EulerAndFreeAccPlot" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="EulerAndFreeAccPlot" />
+  <component name="RunManager" selected="Application.HelloWorldFX">
+    <configuration name="HelloWorldFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="HelloWorldFX" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FirmwareUpdate" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="FirmwareUpdate" />
-      <module name="XsensDOT" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NEWCalibExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="NEWCalibExample" />
-      <module name="XsensDOT" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Sync" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Sync" />
+    <configuration name="MainExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MainExample" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -112,13 +99,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="XsDOTFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XsDOTFX" />
+      <module name="XsensDOT" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XsDOTSwing" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XsDOTSwing" />
+      <module name="XsensDOT" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.HelloWorldFX" />
+        <item itemvalue="Application.XsDOTSwing" />
         <item itemvalue="Application.XsDOT" />
-        <item itemvalue="Application.EulerAndFreeAccPlot" />
-        <item itemvalue="Application.Sync" />
-        <item itemvalue="Application.NEWCalibExample" />
-        <item itemvalue="Application.FirmwareUpdate" />
+        <item itemvalue="Application.XsDOTFX" />
+        <item itemvalue="Application.MainExample" />
       </list>
     </recent_temporary>
   </component>
@@ -187,7 +188,14 @@
       <workItem from="1714558828056" duration="1309000" />
       <workItem from="1714575896436" duration="6011000" />
       <workItem from="1714584608255" duration="508000" />
-      <workItem from="1714662090774" duration="7090000" />
+      <workItem from="1714662090774" duration="7579000" />
+      <workItem from="1714725903275" duration="785000" />
+      <workItem from="1714749933910" duration="3232000" />
+      <workItem from="1714816593603" duration="3371000" />
+      <workItem from="1714837796301" duration="598000" />
+      <workItem from="1714995270257" duration="348000" />
+      <workItem from="1715000591639" duration="40000" />
+      <workItem from="1715013075553" duration="3327000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -252,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714330171644</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="new methods: graphs and sync, fixed mfm">
+      <created>1714670388086</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714670388086</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,7 +283,8 @@
     <MESSAGE value="calibration class demo" />
     <MESSAGE value=" NEW calibration class demo" />
     <MESSAGE value="changes in main, made a calibration function with the complex method and a simple one with resetHeading" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes in main, made a calibration function with the complex method and a simple one with resetHeading" />
+    <MESSAGE value="new methods: graphs and sync, fixed mfm" />
+    <option name="LAST_COMMIT_MESSAGE" value="new methods: graphs and sync, fixed mfm" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
