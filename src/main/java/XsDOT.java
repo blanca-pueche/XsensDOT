@@ -1,5 +1,4 @@
 import com.movella.movelladot_pc_sdk.*;
-import javafx.application.Application;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -28,7 +27,7 @@ public class XsDOT { //TODO handle exceptions
     }
     private static XdpcHandler xdpcHandler = new XdpcHandler();
     private static Scanner sc = new Scanner(System.in);
-    /*public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         try {
             boolean program = true;
             while (program) {
@@ -36,8 +35,8 @@ public class XsDOT { //TODO handle exceptions
                 //Integer choice = Integer.parseInt(sc.nextLine());
                 Integer choice = sc.nextInt(); // Read the integer input
                 sc.nextLine();
-                while (choice>8 || choice<0){
-                    System.out.println("Not a valid number. Enter a number between 1 and 8");
+                while (choice>7 || choice<0){
+                    System.out.println("Not a valid number. Enter a number between 1 and 7");
                     //choice = Integer.parseInt(sc.nextLine());
                     choice = sc.nextInt(); // Read the integer input again
                     sc.nextLine();
@@ -70,18 +69,14 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 5: {
-                        //TODO export data
-                        break;
-                    }
-                    case 6: {
                         infoDot();
                         break;
                     }
-                    case 7: {
+                    case 6: {
                         graphs();
                         break;
                     }
-                    case 8: {
+                    case 7: {
                         System.out.println("Closing app...");
                         program = false;
                         turnOff();
@@ -104,7 +99,7 @@ public class XsDOT { //TODO handle exceptions
             sc.close();
         }
     }
-*/
+
 
     public static void printMenu(){
         System.out.println("-----------------MENU-----------------");
@@ -112,10 +107,9 @@ public class XsDOT { //TODO handle exceptions
         System.out.println("   2: Perform MFM");
         System.out.println("   3: Start recording");
         System.out.println("   4: Synchronize DOTs (connection + example recording)");
-        System.out.println("   5: Export data");
-        System.out.println("   6: Get info about DOT(s)");
-        System.out.println("   7: View last logs from DOT(s)");
-        System.out.println("   8: Exit");
+        System.out.println("   5: Get info about DOT(s)");
+        System.out.println("   6: View last logs from DOT(s)");
+        System.out.println("   7: Exit");
         System.out.println(" --- Choose an option: ");
     }
 
@@ -422,9 +416,8 @@ public class XsDOT { //TODO handle exceptions
 
         // Reset heading for each device to calibrate sensors
         long startTime = XsTimeStamp.nowMs();
+        System.out.print("Calibarting for 5 seconds: ");
         while (XsTimeStamp.nowMs() - startTime <= 5000) { // Reset for 5 seconds
-            System.out.print("Calibarting for 5 seconds: ");
-            Thread.sleep(4000); // Sleep for 4 second
             for (XsDotDevice device : xdpcHandler.connectedDots()) {
                 System.out.print(String.format("\nResetting heading for device %s: ", device.bluetoothAddress().toString()));
                 if (device.resetOrientation(XsResetMethod.XRM_Heading)) {

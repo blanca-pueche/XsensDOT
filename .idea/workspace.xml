@@ -4,14 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="new methods: graphs and sync, fixed mfm">
-      <change afterPath="$PROJECT_DIR$/src/main/java/HelloWorldFX.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" afterDir="false" />
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="trying the ui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/calibrationExample.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FirmwareUpdate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/CalibrationExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DotExampleDataExport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EulerAndFreeAccPlot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/HelloWorldFX.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/NEWCalibExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Sync.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,24 +51,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/blanc/Downloads/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/blanc/Downloads/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Proyectos II\XsensDOT\src" />
@@ -77,16 +82,16 @@
       <recent name="examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.HelloWorldFX">
-    <configuration name="HelloWorldFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="HelloWorldFX" />
+  <component name="RunManager" selected="Application.XsDOT">
+    <configuration name="DotExampleDataExport" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DotExampleDataExport" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MainExample" />
+    <configuration name="HelloWorldFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="HelloWorldFX" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -115,11 +120,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HelloWorldFX" />
-        <item itemvalue="Application.XsDOTSwing" />
         <item itemvalue="Application.XsDOT" />
+        <item itemvalue="Application.XsDOTSwing" />
+        <item itemvalue="Application.DotExampleDataExport" />
+        <item itemvalue="Application.HelloWorldFX" />
         <item itemvalue="Application.XsDOTFX" />
-        <item itemvalue="Application.MainExample" />
       </list>
     </recent_temporary>
   </component>
@@ -195,7 +200,10 @@
       <workItem from="1714837796301" duration="598000" />
       <workItem from="1714995270257" duration="348000" />
       <workItem from="1715000591639" duration="40000" />
-      <workItem from="1715013075553" duration="3327000" />
+      <workItem from="1715013075553" duration="5811000" />
+      <workItem from="1715075562602" duration="2139000" />
+      <workItem from="1715097832080" duration="1164000" />
+      <workItem from="1715099043742" duration="1869000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -267,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714670388086</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="trying the ui">
+      <created>1715016433479</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1715016433479</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,7 +299,8 @@
     <MESSAGE value=" NEW calibration class demo" />
     <MESSAGE value="changes in main, made a calibration function with the complex method and a simple one with resetHeading" />
     <MESSAGE value="new methods: graphs and sync, fixed mfm" />
-    <option name="LAST_COMMIT_MESSAGE" value="new methods: graphs and sync, fixed mfm" />
+    <MESSAGE value="trying the ui" />
+    <option name="LAST_COMMIT_MESSAGE" value="trying the ui" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
