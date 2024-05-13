@@ -193,7 +193,7 @@ public class XsStringImpl {
     return new SWIGTYPE_p_ptrdiff_t(movelladot_pc_sdkJNI.XsStringImpl_find(swigCPtr, this, needle), true);
   }
 
-  public boolean contains(char needle) {
+  public boolean contains(String needle) {
     return movelladot_pc_sdkJNI.XsStringImpl_contains(swigCPtr, this, needle);
   }
 

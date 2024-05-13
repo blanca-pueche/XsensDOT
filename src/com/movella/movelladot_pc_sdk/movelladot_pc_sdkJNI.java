@@ -102,7 +102,7 @@ public class movelladot_pc_sdkJNI {
   public final static native void XsStringImpl_swap__SWIG_0(long jarg1, XsStringImpl jarg1_, long jarg2, XsStringImpl jarg2_);
   public final static native void XsStringImpl_swap__SWIG_1(long jarg1, XsStringImpl jarg1_, long jarg2, long jarg3);
   public final static native long XsStringImpl_find(long jarg1, XsStringImpl jarg1_, char jarg2);
-  public final static native boolean XsStringImpl_contains(long jarg1, XsStringImpl jarg1_, char jarg2);
+  public final static native boolean XsStringImpl_contains(long jarg1, XsStringImpl jarg1_, String jarg2);
   public final static native void XsStringImpl_removeDuplicates(long jarg1, XsStringImpl jarg1_);
   public final static native void XsStringImpl_removeDuplicatesPredicate(long jarg1, XsStringImpl jarg1_, long jarg2);
   public final static native void XsStringImpl_sort(long jarg1, XsStringImpl jarg1_);

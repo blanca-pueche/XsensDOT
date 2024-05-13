@@ -6,16 +6,13 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 
-public class XsDOT { //TODO handle exceptions
+public class XsDOT {
     static{
         try {
             System.loadLibrary("movelladot_pc_sdk_java64");
@@ -61,7 +58,6 @@ public class XsDOT { //TODO handle exceptions
                         System.out.println("How many seconds do you want to record?:");
                         Integer seconds = Integer.parseInt((sc.nextLine()));
                         startRecording(seconds);
-                        //startRecording2(seconds);
                         break;
                     }
                     case 4: {
@@ -73,7 +69,8 @@ public class XsDOT { //TODO handle exceptions
                         break;
                     }
                     case 6: {
-                        graphs();
+                        graphsIndiv();
+                        graphsTwoSensors();
                         break;
                     }
                     case 7: {
@@ -135,7 +132,7 @@ public class XsDOT { //TODO handle exceptions
         }
     }
 
-    public static void graphs() throws Exception {
+    public static void graphsIndiv() throws Exception {
         checkConnection();
 
         for (XsDotDevice device : xdpcHandler.connectedDots())
@@ -155,17 +152,13 @@ public class XsDOT { //TODO handle exceptions
 
             try (BufferedReader br = new BufferedReader(new FileReader(logFileName))) {
                 String line;
-                // Skip the first line (header)
+                // Skip the first lines (headers)
                 br.readLine();
                 boolean headerSkipped = false;
                 boolean header2Skipped = false;
                 while ((line = br.readLine()) != null) {
                     if (!headerSkipped) {
                         headerSkipped = true;
-                        continue;
-                    }
-                    if (!header2Skipped) {
-                        header2Skipped = true;
                         continue;
                     }
                     String[] parts = line.split(",");
@@ -227,6 +220,62 @@ public class XsDOT { //TODO handle exceptions
             freeAccFrame.pack();
             freeAccFrame.setVisible(true);
         }
+    }
+
+    public static void graphsTwoSensors() {
+
+            String logFileName = "movementEuler.csv";
+            String fileName = new File(logFileName).getName();
+            String plotTitle = fileName.substring(0, fileName.lastIndexOf('.'));
+
+            // Read data from the file
+            List<Double> sampleTime = new ArrayList<>();
+            List<Double> eulerX = new ArrayList<>();
+            List<Double> eulerY = new ArrayList<>();
+            List<Double> eulerZ = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new FileReader(logFileName))) {
+                String line;
+                // Skip the first line (header)
+                br.readLine();
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(";");
+                    // Excludes the times where there is no data
+                    if (parts.length < 4) {
+                        continue;
+                    }
+                    sampleTime.add(Double.parseDouble(parts[0]));
+                    eulerX.add(parseDoubleWithComma(parts[1]));
+                    eulerY.add(parseDoubleWithComma(parts[2]));
+                    eulerZ.add(parseDoubleWithComma(parts[3]));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            XYSeriesCollection eulerDataset = new XYSeriesCollection();
+            eulerDataset.addSeries(createSeries(sampleTime, eulerX, "Euler X"));
+            eulerDataset.addSeries(createSeries(sampleTime, eulerY, "Euler Y"));
+            eulerDataset.addSeries(createSeries(sampleTime, eulerZ, "Euler Z"));
+
+            // Euler angles chart
+            JFreeChart eulerChart = ChartFactory.createXYLineChart(
+                    "Euler Angles - " + plotTitle,
+                    "Sample Time",
+                    "Value",
+                    eulerDataset
+            );
+
+            ChartPanel eulerPanel = new ChartPanel(eulerChart);
+
+            JFrame eulerFrame = new JFrame("Euler Angles Plot");
+            eulerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            eulerFrame.getContentPane().add(eulerPanel);
+            eulerFrame.pack();
+            eulerFrame.setVisible(true);
+    }
+    private static double parseDoubleWithComma(String value) {
+        return Double.parseDouble(value.replace(",", "."));
     }
 
     public static XYSeries createSeries(List<Double> xData, List<Double> yData, String seriesName) {
@@ -398,14 +447,6 @@ public class XsDOT { //TODO handle exceptions
             } else {
                 System.out.println("Failed to set output rate!");
             }
-            // Enable logging of Quaternion and Euler angles to CSV file
-            //TODO why doesnt it write the right angles
-            device.setLogOptions(XsLogOptions.Euler);
-            final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
-            System.out.println(String.format("Enable logging to: %s", logFileName));
-            if (!device.enableLogging(logFileName)) {
-                System.out.println(String.format("Failed to enable logging. Reason: %s", device.lastResultText().toString()));
-            }
 
             System.out.println("Putting device into measurement mode: ");
             if (!device.startMeasurement(XsPayloadMode.ExtendedEuler)) {
@@ -416,6 +457,7 @@ public class XsDOT { //TODO handle exceptions
 
         // Reset heading for each device to calibrate sensors
         long startTime = XsTimeStamp.nowMs();
+        //System.out.println(startTime);
         System.out.print("Calibarting for 5 seconds: ");
         while (XsTimeStamp.nowMs() - startTime <= 5000) { // Reset for 5 seconds
             for (XsDotDevice device : xdpcHandler.connectedDots()) {
@@ -430,25 +472,86 @@ public class XsDOT { //TODO handle exceptions
             Thread.sleep(1000); // Sleep for 1 second
         }
 
+        for (XsDotDevice device : xdpcHandler.connectedDots()) {
+            // Enable logging of Quaternion and Euler angles to CSV file
+            device.setLogOptions(XsLogOptions.Euler);
+            final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
+            System.out.println(String.format("Enable logging to: %s", logFileName));
+            if (!device.enableLogging(logFileName)) {
+                System.out.println(String.format("Failed to enable logging. Reason: %s", device.lastResultText().toString()));
+            }
+        }
+
         // Start measurement loop
         System.out.println("\nStarting measurement...");
         System.out.println("Main loop. Measuring data for " + seconds + " seconds.");
         System.out.println("-----------------------------------------");
 
+        startTime = XsTimeStamp.nowMs();
+        //System.out.println(startTime);
+
         // Main measurement loop
-        while (XsTimeStamp.nowMs() - startTime <= 1000 * seconds) {
+        List<XsEuler> eulerVals1 = new ArrayList<>();
+        List<XsEuler> eulerVals2 = new ArrayList<>();
+        int count = 0;
+        XsEuler initial = new XsEuler();
+        eulerVals1.add(initial);
+        eulerVals2.add(initial);
+
+        while (XsTimeStamp.nowMs() - startTime <= 1000*seconds) {
             if (xdpcHandler.packetsAvailable()) {
                 System.out.print("\r");
                 for (XsDotDevice device : xdpcHandler.connectedDots()) {
                     XsDataPacket packet = xdpcHandler.getNextPacket(device.bluetoothAddress().toString());
                     if (packet.containsOrientation()) {
                         XsEuler euler = packet.orientationEuler();
+                        //Only does this, the subtraction, if there are TWO sensors
+                        if (xdpcHandler.connectedDots().size() == 2) {
+                            if (eulerVals1.get(count).empty()) {
+                                eulerVals1.add(euler);
+                                eulerVals1.add(initial);
+                                count++;
+                            } else {
+                                eulerVals2.add(euler);
+                                eulerVals2.add(initial);
+                                count++;
+                            }
+                        }
+
                         System.out.print(String.format("Roll:%7.2f, Pitch:%7.2f, Yaw:%7.2f| ", euler.roll(), euler.pitch(), euler.yaw()));
                     }
                     packet.delete();
                 }
                 System.out.println("\n");
             }
+        }
+        //Delete the zero angles put to see .empty() function
+        if (xdpcHandler.connectedDots().size() == 2) {
+            for (int i = 0; i < eulerVals1.size(); i++) {
+                if (eulerVals1.get(i).empty()) {
+                    eulerVals1.remove(i);
+                }
+                if (eulerVals2.get(i).empty()) {
+                    eulerVals2.remove(i);
+                }
+            }
+        }
+        //Loads the final list
+        if (xdpcHandler.connectedDots().size() == 2) {
+            //Creates a new list with the final angles
+            List<XsEuler> finalMov = new ArrayList<>();
+            for (int i = 0; i < eulerVals1.size(); i++) {
+                Double roll = eulerVals1.get(i).roll() - eulerVals2.get(i).roll();
+                Double pitch = eulerVals1.get(i).pitch() - eulerVals2.get(i).pitch();
+                Double yaw = eulerVals1.get(i).yaw() - eulerVals2.get(i).yaw();
+                XsEuler finalEuler = new XsEuler(roll, pitch, yaw);
+                finalMov.add(finalEuler);
+            }
+            for (int i = 0; i < finalMov.size(); i++) {
+                System.out.print(String.format("Roll:%7.2f, Pitch:%7.2f, Yaw:%7.2f| ", finalMov.get(i).roll(), finalMov.get(i).pitch(), finalMov.get(i).yaw()));
+                System.out.println("\n");
+            }
+            generateCsv(finalMov);
         }
 
         // Reset heading for each device to default alignment
@@ -472,6 +575,19 @@ public class XsDOT { //TODO handle exceptions
             if (!device.disableLogging()) {
                 System.out.print("Failed to disable logging.");
             }
+        }
+    }
+
+    public static void generateCsv(List<XsEuler> eulers) {
+        try (FileWriter writer = new FileWriter("movementEuler.csv")) {
+            writer.append("SampleTimeFine;Euler_X;Euler_Y;Euler_Z\n");
+            for (int i = 0; i < eulers.size(); i++) {
+                XsEuler euler = eulers.get(i);
+                writer.append(String.format("%d;%.4f;%.4f;%.4f\n", i, euler.roll(), euler.yaw(), euler.pitch()));
+            }
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

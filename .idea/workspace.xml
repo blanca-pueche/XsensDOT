@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="trying the ui">
+    <list default="true" id="6874200e-568e-4eb1-acbb-fc14fccb62e5" name="Changes" comment="finished">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calibrationExample.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/CalibrationExample.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DotExampleDataExport.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/EulerAndFreeAccPlot.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HelloWorldFX.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/NEWCalibExample.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Sync.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/XsStringImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/XsStringImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/movelladot_pc_sdkJNI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/movelladot_pc_sdkJNI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -203,7 +198,19 @@
       <workItem from="1715013075553" duration="5811000" />
       <workItem from="1715075562602" duration="2139000" />
       <workItem from="1715097832080" duration="1164000" />
-      <workItem from="1715099043742" duration="1869000" />
+      <workItem from="1715099043742" duration="2694000" />
+      <workItem from="1715104096322" duration="117000" />
+      <workItem from="1715154344750" duration="1987000" />
+      <workItem from="1715242805296" duration="3509000" />
+      <workItem from="1715259221566" duration="2423000" />
+      <workItem from="1715261798170" duration="3691000" />
+      <workItem from="1715331543964" duration="83000" />
+      <workItem from="1715332088283" duration="3418000" />
+      <workItem from="1715335907183" duration="818000" />
+      <workItem from="1715340351296" duration="672000" />
+      <workItem from="1715341039800" duration="22000" />
+      <workItem from="1715341165418" duration="1352000" />
+      <workItem from="1715439251810" duration="7061000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -282,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715016433479</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="thinking of doing a better UI">
+      <created>1715101091668</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1715101091668</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,7 +314,9 @@
     <MESSAGE value="changes in main, made a calibration function with the complex method and a simple one with resetHeading" />
     <MESSAGE value="new methods: graphs and sync, fixed mfm" />
     <MESSAGE value="trying the ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying the ui" />
+    <MESSAGE value="thinking of doing a better UI" />
+    <MESSAGE value="finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
