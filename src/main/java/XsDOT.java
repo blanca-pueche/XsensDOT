@@ -70,7 +70,9 @@ public class XsDOT {
                     }
                     case 6: {
                         graphsIndiv();
-                        graphsTwoSensors();
+                        if (xdpcHandler.connectedDots().size() == 2) {
+                            graphsTwoSensors();
+                        }
                         break;
                     }
                     case 7: {
@@ -457,7 +459,6 @@ public class XsDOT {
 
         // Reset heading for each device to calibrate sensors
         long startTime = XsTimeStamp.nowMs();
-        //System.out.println(startTime);
         System.out.print("Calibarting for 5 seconds: ");
         while (XsTimeStamp.nowMs() - startTime <= 5000) { // Reset for 5 seconds
             for (XsDotDevice device : xdpcHandler.connectedDots()) {
@@ -473,7 +474,7 @@ public class XsDOT {
         }
 
         for (XsDotDevice device : xdpcHandler.connectedDots()) {
-            // Enable logging of Quaternion and Euler angles to CSV file
+            // Enable logging of Euler angles to CSV file
             device.setLogOptions(XsLogOptions.Euler);
             final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
             System.out.println(String.format("Enable logging to: %s", logFileName));
@@ -488,7 +489,6 @@ public class XsDOT {
         System.out.println("-----------------------------------------");
 
         startTime = XsTimeStamp.nowMs();
-        //System.out.println(startTime);
 
         // Main measurement loop
         List<XsEuler> eulerVals1 = new ArrayList<>();
@@ -505,7 +505,7 @@ public class XsDOT {
                     XsDataPacket packet = xdpcHandler.getNextPacket(device.bluetoothAddress().toString());
                     if (packet.containsOrientation()) {
                         XsEuler euler = packet.orientationEuler();
-                        //Only does this, the subtraction, if there are TWO sensors
+                        //Stores values into Lists to get the subtraction ONLY IF TWO SENSORS ARE CONNECTED
                         if (xdpcHandler.connectedDots().size() == 2) {
                             if (eulerVals1.get(count).empty()) {
                                 eulerVals1.add(euler);
@@ -525,7 +525,7 @@ public class XsDOT {
                 System.out.println("\n");
             }
         }
-        //Delete the zero angles put to see .empty() function
+        //Delete the zero angles put to see .empty() function ONLY if TWO sensors
         if (xdpcHandler.connectedDots().size() == 2) {
             for (int i = 0; i < eulerVals1.size(); i++) {
                 if (eulerVals1.get(i).empty()) {
@@ -536,7 +536,7 @@ public class XsDOT {
                 }
             }
         }
-        //Loads the final list
+        //Loads the final list ONLY if TWO sensors
         if (xdpcHandler.connectedDots().size() == 2) {
             //Creates a new list with the final angles
             List<XsEuler> finalMov = new ArrayList<>();
@@ -583,7 +583,7 @@ public class XsDOT {
             writer.append("SampleTimeFine;Euler_X;Euler_Y;Euler_Z\n");
             for (int i = 0; i < eulers.size(); i++) {
                 XsEuler euler = eulers.get(i);
-                writer.append(String.format("%d;%.4f;%.4f;%.4f\n", i, euler.roll(), euler.yaw(), euler.pitch()));
+                writer.append(String.format("%d;%.4f;%.4f;%.4f\n", i, euler.roll(), euler.pitch(), euler.yaw()));
             }
             writer.flush();
         } catch (IOException e) {

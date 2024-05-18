@@ -8,10 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-68.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" beforeDir="false" afterPath="$PROJECT_DIR$/logfile_D4-22-CD-00-4D-93.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/XsStringImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/XsStringImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/movelladot_pc_sdkJNI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/movella/movelladot_pc_sdk/movelladot_pc_sdkJNI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movementEuler.csv" beforeDir="false" afterPath="$PROJECT_DIR$/movementEuler.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/XsDOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/XsDOT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/XsDOTSwing.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +208,12 @@
       <workItem from="1715340351296" duration="672000" />
       <workItem from="1715341039800" duration="22000" />
       <workItem from="1715341165418" duration="1352000" />
-      <workItem from="1715439251810" duration="7061000" />
+      <workItem from="1715439251810" duration="7799000" />
+      <workItem from="1715870928796" duration="1379000" />
+      <workItem from="1715954140579" duration="9308000" />
+      <workItem from="1715971787975" duration="114000" />
+      <workItem from="1715972017818" duration="2476000" />
+      <workItem from="1716029224183" duration="528000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -296,7 +299,21 @@
       <option name="project" value="LOCAL" />
       <updated>1715101091668</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="finished">
+      <created>1715586785036</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1715586785036</updated>
+    </task>
+    <task id="LOCAL-00014" summary="finished">
+      <created>1715586818232</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1715586818232</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
