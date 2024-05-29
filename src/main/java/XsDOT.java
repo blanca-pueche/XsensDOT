@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Scanner;
 
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+
+
 public class XsDOT {
     static{
         try {
@@ -57,7 +62,11 @@ public class XsDOT {
                     case 3: {
                         System.out.println("How many seconds do you want to record?:");
                         Integer seconds = Integer.parseInt((sc.nextLine()));
-                        startRecording(seconds);
+                        if (xdpcHandler.connectedDots().size()==2){
+                            startRecordingParallel(seconds);
+                        } else {
+                            startRecording(seconds);
+                        }
                         break;
                     }
                     case 4: {
@@ -92,8 +101,10 @@ public class XsDOT {
             }
         }catch(NumberFormatException ex){
             System.out.println("  NOT A NUMBER. Closing application... \n");
+            turnOff();
         } catch (IOException e) {
             e.printStackTrace();
+            turnOff();
         } finally {
             sc.close();
         }
@@ -483,9 +494,16 @@ public class XsDOT {
             }
         }
 
+        //TODO this is new
+        Thread.sleep(2000); //Sleep for 2 seconds
+
         // Start measurement loop
         System.out.println("\nStarting measurement...");
         System.out.println("Main loop. Measuring data for " + seconds + " seconds.");
+
+        //TODO this is new
+        Thread.sleep(3000); //Sleep for 3 seconds
+
         System.out.println("-----------------------------------------");
 
         startTime = XsTimeStamp.nowMs();
@@ -577,6 +595,151 @@ public class XsDOT {
             }
         }
     }
+
+    public static void startRecordingParallel(int seconds) throws Exception {
+        checkConnection();
+
+        List<XsDotDevice> devices = xdpcHandler.connectedDots();
+
+        XsDotDevice device1 = devices.get(0);
+        XsDotDevice device2 = devices.get(1);
+
+        // Create thread-safe collections for storing the measurements
+        List<XsEuler> eulerVals1 = new CopyOnWriteArrayList<>();
+        List<XsEuler> eulerVals2 = new CopyOnWriteArrayList<>();
+
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Thread thread1 = new Thread(() -> {
+            try {
+                startMeasurement(device1, eulerVals1, seconds,latch);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            try {
+                startMeasurement(device2, eulerVals2, seconds,latch);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+        // Ensure both threads are ready to start measuring
+        latch.countDown();
+        thread1.join();
+        thread2.join();
+
+        int totalSize;
+        // Subtract the values after both threads have finished
+        if (eulerVals1.size() != eulerVals2.size()){
+            totalSize = Math.min(eulerVals1.size(), eulerVals2.size());
+        }
+        else {
+            totalSize = eulerVals1.size();
+        }
+        List<XsEuler> finalMov = new ArrayList<>();
+        for (int i = 0; i < totalSize; i++) {
+            Double roll = eulerVals1.get(i).roll() - eulerVals2.get(i).roll();
+            Double pitch = eulerVals1.get(i).pitch() - eulerVals2.get(i).pitch();
+            Double yaw = eulerVals1.get(i).yaw() - eulerVals2.get(i).yaw();
+            XsEuler finalEuler = new XsEuler(roll, pitch, yaw);
+            finalMov.add(finalEuler);
+        }
+        generateCsv(finalMov);
+
+            // Print the new list
+        for (int i = 0; i < finalMov.size(); i++) {
+            System.out.println("Roll: " + finalMov.get(i).roll() + " Pitch: " + finalMov.get(i).pitch() + " Yaw: " + finalMov.get(i).yaw());
+        }
+    }
+
+    private static void startMeasurement(XsDotDevice device, List<XsEuler> eulerVals, int seconds, CountDownLatch latch) throws Exception {
+        // Set the filter profile
+        if (device.setOnboardFilterProfile(new XsString("General"))) {
+            System.out.println("Successfully set filter profile to General");
+        } else {
+            System.out.println("Failed to set filter profile!");
+        }
+
+        // Set output rate
+        if (device.setOutputRate(60)) {
+            System.out.print("Successfully set output rate to 60");
+        } else {
+            System.out.println("Failed to set output rate!");
+        }
+
+        System.out.print("Putting device into measurement mode: ");
+        if (!device.startMeasurement(XsPayloadMode.ExtendedEuler)) {
+            System.out.println(String.format("Could not put device into measurement mode. Reason: %s", device.lastResultText().toString()));
+            return;
+        }
+
+        // Reset heading for the device to calibrate sensors
+        long startTime = XsTimeStamp.nowMs();
+        System.out.print("Calibrating for 5 seconds: ");
+        while (XsTimeStamp.nowMs() - startTime <= 5000) { // Reset for 5 seconds
+            System.out.print(String.format("\nResetting heading for device %s: ", device.bluetoothAddress().toString()));
+            if (device.resetOrientation(XsResetMethod.XRM_Heading)) {
+                System.out.print("OK");
+            } else {
+                System.out.print(String.format("NOK: %s", device.lastResultText().toString()));
+            }
+            System.out.println("\n");
+            Thread.sleep(1000); // Sleep for 1 second
+        }
+
+        // Enable logging of Euler angles to CSV file
+        device.setLogOptions(XsLogOptions.Euler);
+        final XsString logFileName = new XsString(String.format("logfile_" + "%s" + ".csv", device.bluetoothAddress().toString().replace(':', '-')));
+        System.out.print(String.format("Enable logging to: %s", logFileName));
+        if (!device.enableLogging(logFileName)) {
+            System.out.println(String.format("Failed to enable logging. Reason: %s", device.lastResultText().toString()));
+        }
+
+        Thread.sleep(2000); // Sleep for 2 seconds
+
+        //TODO this is new
+        latch.await();
+
+        // Start measurement loop
+        System.out.println("\nStarting measurement...");
+        System.out.println("Main loop. Measuring data for " + seconds + " seconds.");
+        System.out.println("-----------------------------------------");
+
+        startTime = XsTimeStamp.nowMs();
+
+        // Main measurement loop
+        while (XsTimeStamp.nowMs() - startTime <= 1000 * seconds) {
+            if (xdpcHandler.packetsAvailable()) {
+                System.out.print("\r");
+                XsDataPacket packet = xdpcHandler.getNextPacket(device.bluetoothAddress().toString());
+                if (packet.containsOrientation()) {
+                    XsEuler euler = packet.orientationEuler();
+                    eulerVals.add(euler);
+                    //System.out.print(String.format("Roll:%7.2f, Pitch:%7.2f, Yaw:%7.2f| ", euler.roll(), euler.pitch(), euler.yaw()));
+                }
+                packet.delete();
+                System.out.println("\n");
+            }
+        }
+
+        // End measurement
+        System.out.println("End measurement");
+        if (!device.stopMeasurement()) {
+            System.out.println(String.format("Could not stop measurement mode. Reason: %s", device.lastResultText().toString()));
+        }
+
+        System.out.println("\n-----------------------------------------");
+
+        if (!device.disableLogging()) {
+            System.out.println(String.format("Failed to save log file. Reason: %s", device.lastResultText().toString()));
+        }
+    }
+
 
     public static void generateCsv(List<XsEuler> eulers) {
         try (FileWriter writer = new FileWriter("movementEuler.csv")) {

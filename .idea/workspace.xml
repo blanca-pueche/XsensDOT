@@ -50,7 +50,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/blanc/Downloads/openjfx-22.0.1_windows-x64_bin-sdk/javafx-sdk-22.0.1/lib&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/BECA PREGRADO/ChEBIsearch&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -90,15 +90,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XsDOT" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="XsDOT" />
+    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MainTest" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XsDOTFX" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="XsDOTFX" />
+    <configuration name="XsDOT" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="XsDOT" />
       <module name="XsensDOT" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -114,10 +114,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.XsDOT" />
+        <item itemvalue="Application.MainTest" />
         <item itemvalue="Application.XsDOTSwing" />
         <item itemvalue="Application.DotExampleDataExport" />
         <item itemvalue="Application.HelloWorldFX" />
-        <item itemvalue="Application.XsDOTFX" />
       </list>
     </recent_temporary>
   </component>
@@ -213,7 +213,16 @@
       <workItem from="1715954140579" duration="9308000" />
       <workItem from="1715971787975" duration="114000" />
       <workItem from="1715972017818" duration="2476000" />
-      <workItem from="1716029224183" duration="528000" />
+      <workItem from="1716029224183" duration="670000" />
+      <workItem from="1716133945902" duration="3190000" />
+      <workItem from="1716288502856" duration="137000" />
+      <workItem from="1716302351146" duration="3000" />
+      <workItem from="1716452044737" duration="1024000" />
+      <workItem from="1716461207814" duration="14668000" />
+      <workItem from="1716487528624" duration="4466000" />
+      <workItem from="1716544870336" duration="1787000" />
+      <workItem from="1716560032384" duration="1385000" />
+      <workItem from="1717000785590" duration="1551000" />
     </task>
     <task id="LOCAL-00001" summary="Updated menu and new functions">
       <created>1709736241555</created>
@@ -313,7 +322,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715586818232</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="finished">
+      <created>1716029866080</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1716029866080</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
