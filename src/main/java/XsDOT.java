@@ -494,14 +494,12 @@ public class XsDOT {
             }
         }
 
-        //TODO this is new
         Thread.sleep(2000); //Sleep for 2 seconds
 
         // Start measurement loop
         System.out.println("\nStarting measurement...");
         System.out.println("Main loop. Measuring data for " + seconds + " seconds.");
 
-        //TODO this is new
         Thread.sleep(3000); //Sleep for 3 seconds
 
         System.out.println("-----------------------------------------");
@@ -702,7 +700,6 @@ public class XsDOT {
 
         Thread.sleep(2000); // Sleep for 2 seconds
 
-        //TODO this is new
         latch.await();
 
         // Start measurement loop
